@@ -1,3 +1,16 @@
+用#sudo dnw 命令下载文件时，提示can not open /dev/secbulk0
+
+第一步：
+    是检查系统中是否存在 /dev/secbulk0 设备
+
+第二部：
+    检查dnw代码中是否是使用/dev/secbulk0作为下载设备
+    const char* dev = "/dev/secbulk0";
+
+另外一种可能是：
+      有时候由于内核的升级，运行时会提醒Can not open/dev/secbulk0的错误，此时需要重新到secbulk目录执行$make-C /lib/modules/`uname -r`/build M=`pwd` modules，然后加载模块$sudo insmod./secbulk.ko即可！
+
+
 
 #提高下载速度
 将secbulk.c中的
@@ -35,18 +48,5 @@ clean:
 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) clean
 	rm -rf *.order *.symvers
 
-
-
-用#sudo dnw 命令下载文件时，提示can not open /dev/secbulk0
-
-第一步：
-    是检查系统中是否存在 /dev/secbulk0 设备
-
-第二部：
-    检查dnw代码中是否是使用/dev/secbulk0作为下载设备
-    const char* dev = "/dev/secbulk0";
-
-另外一种可能是：
-      有时候由于内核的升级，运行时会提醒Can not open/dev/secbulk0的错误，此时需要重新到secbulk目录执行$make-C /lib/modules/`uname -r`/build M=`pwd` modules，然后加载模块$sudo insmod./secbulk.ko即可！
 
 
