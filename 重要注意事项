@@ -1,6 +1,12 @@
-在linux mint 18 下编译 驱动secbulk时出现错误：
+
+#提高下载速度
+将secbulk.c中的
+   #define BULKOUT_BUFFER_SIZE32
+  改为
+  #define BULKOUT_BUFFER_SIZE 512
 
 
+#在linux mint 18 下编译 驱动secbulk时出现错误：
 make -C /lib/modules/`uname -r`/build M=`pwd`/src/driver modules
 make[1]: Entering directory '/usr/src/linux-headers-4.8.0-59-generic'
 make[2]: Circular /work/dnw-linux/src/driver/secbulk.o <- /work/dnw-linux/src/driver/secbulk.o dependency dropped.
@@ -14,7 +20,7 @@ make[1]: Leaving directory '/usr/src/linux-headers-4.8.0-59-generic'
 Makefile:9: recipe for target 'driver' failed
 make: *** [driver] Error 2
 
-报错原因是驱动的makefile有问题,原src/driver/Makefile的内容为：
+报错原因是驱动的makefile有问题,解决办法：原src/driver/Makefile的内容为：
 obj-m := secbulk.o
 secbulk-m := secbulk.o                  《《《《《《这一行需要屏蔽
 
@@ -28,3 +34,19 @@ default:
 clean:
 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) clean
 	rm -rf *.order *.symvers
+
+
+
+用#sudo dnw 命令下载文件时，提示can not open /dev/secbulk0
+
+第一步：
+    是检查系统中是否存在 /dev/secbulk0 设备
+
+第二部：
+    检查dnw代码中是否是使用/dev/secbulk0作为下载设备
+    const char* dev = "/dev/secbulk0";
+
+另外一种可能是：
+      有时候由于内核的升级，运行时会提醒Can not open/dev/secbulk0的错误，此时需要重新到secbulk目录执行$make-C /lib/modules/`uname -r`/build M=`pwd` modules，然后加载模块$sudo insmod./secbulk.ko即可！
+
+
