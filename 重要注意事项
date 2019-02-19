@@ -1,0 +1,30 @@
+在linux mint 18 下编译 驱动secbulk时出现错误：
+
+
+make -C /lib/modules/`uname -r`/build M=`pwd`/src/driver modules
+make[1]: Entering directory '/usr/src/linux-headers-4.8.0-59-generic'
+make[2]: Circular /work/dnw-linux/src/driver/secbulk.o <- /work/dnw-linux/src/driver/secbulk.o dependency dropped.
+  LD [M]  /work/dnw-linux/src/driver/secbulk.o
+ld: no input files
+scripts/Makefile.build:427: recipe for target '/work/dnw-linux/src/driver/secbulk.o' failed
+make[2]: *** [/work/dnw-linux/src/driver/secbulk.o] Error 1
+Makefile:1491: recipe for target '_module_/work/dnw-linux/src/driver' failed
+make[1]: *** [_module_/work/dnw-linux/src/driver] Error 2
+make[1]: Leaving directory '/usr/src/linux-headers-4.8.0-59-generic'
+Makefile:9: recipe for target 'driver' failed
+make: *** [driver] Error 2
+
+报错原因是驱动的makefile有问题,原src/driver/Makefile的内容为：
+obj-m := secbulk.o
+secbulk-m := secbulk.o                  《《《《《《这一行需要屏蔽
+
+或者也可以将该Makefile单独修改为：
+obj-m := secbulk.o
+KDIR := /lib/modules/`uname -r`/build
+PWD  := $(shell pwd)
+
+default:
+	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
+clean:
+	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) clean
+	rm -rf *.order *.symvers

@@ -70,3 +70,12 @@ CMakeLists.txt.user
 */**/dwn
 */**/dwn2
 */**/.cache.mk
+*/**/.*.ko.cmd
+*/**/.*.mod.o.cmd
+*/**/.*.o.cmd
+*/**/.tmp_versions/
+*/**/Module.symvers
+*/**/modules.order
+*/**/*.ko
+*/**/*.mod.c
+
