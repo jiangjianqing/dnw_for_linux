@@ -67,8 +67,8 @@ _lib/
 _lib
 *.sublime-workspace
 CMakeLists.txt.user
-*/**/dwn
-*/**/dwn2
+*/**/dnw
+*/**/dnw2
 */**/.cache.mk
 */**/.*.ko.cmd
 */**/.*.mod.o.cmd
