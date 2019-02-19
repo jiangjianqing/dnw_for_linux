@@ -5,13 +5,7 @@ ls /dev/ttyUSB*
     查看USB转串口线是否已经接上
 
 dmesg
-    查看驱动模块的输出
-
-为dnw查看idVendor和idProduct的方法
-    1、先执行dmesg -c 清除之前的记录信息，
-    2、开发板上电
-    3、执行dmesg
-    此时可以得知，开发板 idVendor=04e8, idProduct=1234 ， 记住这两个数,dnw的源码和驱动中都需要进行对应的修改
+    
 
 sudo insmod ./secbulk.ko
     加载该模块到内核（注意：需要root权限）
@@ -19,8 +13,26 @@ sudo insmod ./secbulk.ko
      [  238.007970] secbulk:secbulk loaded
      [  238.009101] usbcore: registered new interface driver secbulk
 
+dmesg 
+    查看驱动模块的输出
+　　secbulk:secbulk loaded
+　　usbcore: registered new interface driver secbulk （看到这样两行就说明成功了）
+
 lsmod | grep -n secbulk
     查看指定的驱动是否已经成功加载
+lsmod  
+    列出所有已加载模块
+
+3.编译完成后，会生成secbulk.ko文件： # ls
+ 　　Makefile Module.symvers secbulk.ko secbulk.mod.o
+　　modules.order secbulk.c secbulk.mod.c secbulk.o
+
+为dnw查看idVendor和idProduct的方法
+    1、先执行dmesg -c 清除之前的记录信息，
+    2、开发板上电
+    3、执行dmesg
+    此时可以得知，开发板 idVendor=04e8, idProduct=1234 ， 记住这两个数,dnw的源码和驱动中都需要进行对应的修改
+
 
 
 
