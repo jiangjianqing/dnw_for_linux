@@ -69,3 +69,4 @@ _lib
 CMakeLists.txt.user
 */**/dwn
 */**/dwn2
+*/**/.cache.mk

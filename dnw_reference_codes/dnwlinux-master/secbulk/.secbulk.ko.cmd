@@ -1,0 +1,1 @@
+cmd_/home/cp/workspace/toolschain/dnw_linux/secbulk/secbulk.ko := ld -r -m elf_x86_64 -T /usr/src/linux-headers-2.6.38-15-generic/scripts/module-common.lds --build-id  -o /home/cp/workspace/toolschain/dnw_linux/secbulk/secbulk.ko /home/cp/workspace/toolschain/dnw_linux/secbulk/secbulk.o /home/cp/workspace/toolschain/dnw_linux/secbulk/secbulk.mod.o
